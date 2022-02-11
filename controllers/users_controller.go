@@ -1,13 +1,18 @@
 package controllers
 
-func GetUser() {
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
 
+func GetUser(c *gin.Context) {
+	c.String(http.StatusNotImplemented, "implement me")
 }
 
-func CreateUser() {
-
+func CreateUser(c *gin.Context) {
+	c.String(http.StatusNotImplemented, "implement me")
 }
 
-func FindUser() {
-
+func SearchUser(c *gin.Context) {
+	c.String(http.StatusNotImplemented, "implement me")
 }
