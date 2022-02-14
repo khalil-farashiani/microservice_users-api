@@ -16,7 +16,6 @@ func GetUser(c *gin.Context) {
 		c.JSON(err.Status, err)
 		return
 	}
-
 	user, getErr := services.GetUser(userId)
 	if getErr != nil {
 		c.JSON(getErr.Status, getErr)

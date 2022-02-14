@@ -2,6 +2,7 @@ package users
 
 import (
 	"fmt"
+	"github.com/khalil-farashiani/microservice_users-api/datasources/mysql/users_db"
 	"github.com/khalil-farashiani/microservice_users-api/utils/date_utils"
 	"github.com/khalil-farashiani/microservice_users-api/utils/errors"
 )
@@ -9,6 +10,10 @@ import (
 var UserDB = make(map[int64]*User)
 
 func (user *User) Get() *errors.RestErr {
+	if err := users_db.Client.Ping(); err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
 	result := UserDB[user.Id]
 	if result == nil {
 		return errors.NewNotFoundError(fmt.Sprintf("user with %d id not found", user.Id))
