@@ -13,7 +13,7 @@ var (
 	username = getEnv("my_sql_username", "root")
 	password = getEnv("my_sql_password", "root")
 	host     = getEnv("my_sql_host", "127.0.0.1:3306")
-	schema   = getEnv("my_sql_schema", "users")
+	schema   = getEnv("my_sql_schema", "users_db")
 )
 
 func getEnv(key, fallback string) string {
