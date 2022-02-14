@@ -3,7 +3,6 @@ package users_db
 import (
 	"database/sql"
 	"fmt"
-	"github.com/go-sql-driver/mysql"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"os"
@@ -40,6 +39,5 @@ func init() {
 	if err = Client.Ping(); err != nil {
 		panic(err)
 	}
-	mysql.SetLogger()
 	log.Println("database successfully connected")
 }
