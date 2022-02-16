@@ -20,7 +20,7 @@ func ParsError(err error) *errors.RestErr {
 				fmt.Sprintf("no recored matching given id"),
 			)
 		}
-		return errors.NewInternalServerError("error parsing database response")
+		return errors.NewInternalServerError(fmt.Sprintf("error parsing database response: %s", err.Error()))
 	}
 	switch sqlErr.Number {
 	case 1062:
