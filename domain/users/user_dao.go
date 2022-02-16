@@ -8,27 +8,26 @@ import (
 )
 
 const (
-	errorNoRows     = "no rows in result set"
 	queryInsertUser = "INSERT INTO users(first_name, last_name, email, date_created) VALUES(?, ?, ?, ?);"
 	queryGetUser    = "SELECT id, first_name, last_name, email, date_created FROM users WHERE id=?"
 )
 
 func (user *User) Get() *errors.RestErr {
-	stmt, err := users_db.Client.Prepare(queryInsertUser)
+	stmt, err := users_db.Client.Prepare(queryGetUser)
 	if err != nil {
 		return errors.NewInternalServerError(err.Error())
 	}
 	defer stmt.Close()
 
-	result := stmt.QueryRow(&user.Id)
+	result := stmt.QueryRow(user.Id)
 	if getErr := result.Scan(&user.Id, &user.FirstName, &user.LastName, &user.Email, &user.DateCreated); getErr != nil {
-		mysql_utils.ParsError(getErr)
+		return mysql_utils.ParsError(getErr)
 	}
 	return nil
 }
 
 func (user *User) Save() *errors.RestErr {
-	stmt, err := users_db.Client.Prepare(queryGetUser)
+	stmt, err := users_db.Client.Prepare(queryInsertUser)
 	if err != nil {
 		return errors.NewInternalServerError(err.Error())
 	}
@@ -41,10 +40,10 @@ func (user *User) Save() *errors.RestErr {
 		return mysql_utils.ParsError(saveErr)
 	}
 	userId, err := insertResult.LastInsertId()
+
 	if err != nil {
 		return mysql_utils.ParsError(err)
 	}
-
 	user.Id = userId
 	return nil
 }
