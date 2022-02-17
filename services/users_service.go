@@ -30,5 +30,13 @@ func UpdateUser(user users.User) (*users.User, *errors.RestErr) {
 	if err != nil {
 		return nil, err
 	}
-	current.FirstName =
+	current.FirstName = user.FirstName
+	current.LastName = user.LastName
+	current.Email = user.Email
+
+	if err := current.Update(); err != nil {
+		return nil, err
+	}
+
+	return current, nil
 }
