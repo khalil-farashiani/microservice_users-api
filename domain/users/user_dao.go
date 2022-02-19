@@ -70,11 +70,9 @@ func (user *User) Delete() *errors.RestErr {
 		return errors.NewBadRequestError(err.Error())
 	}
 	defer stmt.Close()
-	_, err = stmt.Exec(user.Id)
 
-	if err != nil {
+	if _, err = stmt.Exec(user.Id); err != nil {
 		return mysql_utils.ParsError(err)
 	}
-
 	return nil
 }
