@@ -31,9 +31,6 @@ func UpdateUser(ispartial bool, user users.User) (*users.User, *errors.RestErr) 
 		return nil, err
 	}
 
-	//if err := user.Validate(); err != nil {
-	//	return nil, err
-	//}
 	if ispartial {
 		if user.FirstName != "" {
 			current.FirstName = user.FirstName
@@ -55,4 +52,14 @@ func UpdateUser(ispartial bool, user users.User) (*users.User, *errors.RestErr) 
 	}
 
 	return current, nil
+}
+
+func DeleteUSer(userId int64) (*users.User, *errors.RestErr) {
+	result := &users.User{Id: userId}
+
+	if err := result.Delete(); err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }
