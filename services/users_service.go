@@ -2,6 +2,7 @@ package services
 
 import (
 	"github.com/khalil-farashiani/microservice_users-api/domain/users"
+	"github.com/khalil-farashiani/microservice_users-api/utils/crypto_utils"
 	"github.com/khalil-farashiani/microservice_users-api/utils/date_utils"
 	"github.com/khalil-farashiani/microservice_users-api/utils/errors"
 )
@@ -19,10 +20,10 @@ func CreateUser(user users.User) (*users.User, *errors.RestErr) {
 		return nil, err
 	}
 	user.DateCreated = date_utils.GetNowDBFormat()
+	user.Password = crypto_utils.GetMD5(user.Password)
 	if err := user.Save(); err != nil {
 		return nil, err
 	}
-
 	return &user, nil
 }
 
