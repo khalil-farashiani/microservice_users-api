@@ -22,5 +22,9 @@ func (user *User) Validate() *errors.RestErr {
 	if user.Email == "" {
 		return errors.NewBadRequestError("invalid email address")
 	}
+	user.Password = strings.TrimSpace(user.LastName)
+	if user.Password == "" {
+		return errors.NewBadRequestError("invalid password")
+	}
 	return nil
 }
