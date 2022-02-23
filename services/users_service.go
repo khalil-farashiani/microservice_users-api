@@ -21,6 +21,7 @@ func CreateUser(user users.User) (*users.User, *errors.RestErr) {
 	}
 	user.DateCreated = date_utils.GetNowDBFormat()
 	user.Password = crypto_utils.GetMD5(user.Password)
+
 	if err := user.Save(); err != nil {
 		return nil, err
 	}
