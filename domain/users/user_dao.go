@@ -37,7 +37,6 @@ func (user *User) Save() *errors.RestErr {
 	defer stmt.Close()
 
 	insertResult, saveErr := stmt.Exec(user.FirstName, user.LastName, user.Email, user.DateCreated, user.Password, user.Status)
-	fmt.Println(user.FirstName, user.LastName, user.Email, user.DateCreated, user.Password, user.Status)
 	if saveErr != nil {
 		return mysql_utils.ParsError(saveErr)
 	}
