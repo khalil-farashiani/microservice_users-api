@@ -28,8 +28,7 @@ func init() {
 		username,
 		password,
 		host,
-		schema,
-	)
+		schema)
 	var err error
 	Client, err = sql.Open("mysql", dataSourceName)
 
