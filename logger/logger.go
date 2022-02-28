@@ -1,7 +1,6 @@
 package logger
 
 import (
-	"fmt"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -16,10 +15,16 @@ func init() {
 		Level:       zap.NewAtomicLevelAt(zap.InfoLevel),
 		Encoding:    "json",
 		EncoderConfig: zapcore.EncoderConfig{
-			LevelKey:   "level",
-			TimeKey:    "time",
-			MessageKey: "this is a message from zap logger",
+			LevelKey:     "level",
+			TimeKey:      "time",
+			MessageKey:   "msg",
+			EncodeTime:   zapcore.ISO8601TimeEncoder,
+			EncodeLevel:  zapcore.LowercaseColorLevelEncoder,
+			EncodeCaller: zapcore.ShortCallerEncoder,
 		},
 	}
-	fmt.Println(logConfig)
+	var err error
+	if Log, err := logConfig.Build(); err != nil {
+		panic(err)
+	}
 }
