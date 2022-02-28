@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	Log *zap.Logger
+	log *zap.Logger
 )
 
 func init() {
@@ -19,12 +19,27 @@ func init() {
 			TimeKey:      "time",
 			MessageKey:   "msg",
 			EncodeTime:   zapcore.ISO8601TimeEncoder,
-			EncodeLevel:  zapcore.LowercaseColorLevelEncoder,
+			EncodeLevel:  zapcore.LowercaseLevelEncoder,
 			EncodeCaller: zapcore.ShortCallerEncoder,
 		},
 	}
 	var err error
-	if Log, err := logConfig.Build(); err != nil {
+	if log, err = logConfig.Build(); err != nil {
 		panic(err)
 	}
+}
+
+func GetLog() {
+	return log
+}
+
+func Info(msg string, tags ...zap.Field) {
+	log.Info(msg, tags...)
+	log.Sync()
+}
+
+func Error(msg string, err error, tags ...zap.Field) {
+	tags = append(tags, zap.NamedError("err", err))
+	log.Error(msg, tags...)
+	log.Sync()
 }
